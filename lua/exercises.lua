@@ -21,4 +21,27 @@ end
 
 -- Write your line count function here
 
+local open = io.open
+
+function meaningful_line_count(path)
+    local file = open(path, "r") 
+    if not file then 
+    error("No such file")
+   end
+   count = 0
+   currentLine = file:read "*l"
+   while currentLine ~= nil do
+    while string.gsub(currentLine, "%s+", "") == '' or (string.gsub(currentLine, "%s+", "")):sub(1, 1) == "#" do
+        currentLine = file:read "*l"
+    end
+    currentLine = file:read "*l"
+    count = count + 1
+  end
+    
+    file:close()
+    return count
+end
+
+
+
 -- Write your Quaternion table here
