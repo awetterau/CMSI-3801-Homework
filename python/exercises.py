@@ -15,33 +15,22 @@ def change(amount: int) -> dict[int, int]:
 
 # Write your first then lower case function here
 def first_then_lower_case(a, p):
-    for i in a:
-        if p(i):
-            return i.lower()
+    for string in a:
+        if p(string):
+            return string.lower()
     return None
 
 
 # Write your powers generator here
+def powers_generator(*, base, limit):
+    power = 0
+    while True:
+        result = base ** power
+        if result > limit:
+            break
+        yield result
+        power += 1
 
-class powers_generator:
-
-    def __init__(self, base, limit):
-        self.base = base
-        self.limit = limit
-        self.currentNum = 0
-    def __iter__(self):
-        return self
-    def __next__(self):
-        if ((self.base ** self.currentNum) <= self.limit):
-            num = self.base ** self.currentNum
-            self.currentNum += 1
-            return num
-        else:
-            raise StopIteration
-        
-    
-    
-    
 
 # Write your say function here
 def say(word=None):

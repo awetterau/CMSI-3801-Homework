@@ -45,7 +45,6 @@ end
 
 
 -- Write your Quaternion table here
--- Quaternion class in Lua
 Quaternion = {}
 Quaternion.__index = Quaternion
 
@@ -90,6 +89,6 @@ function Quaternion.__tostring(q)
     str = str .. format_term(q.c, "j")
     str = str .. format_term(q.d, "k")
     
-    str = str:gsub("^%+", "")  -- Remove leading '+'
+    str = str:gsub("^%+", "")
     return str == "" and "0" or str
 end
