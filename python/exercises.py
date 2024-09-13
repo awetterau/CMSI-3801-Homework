@@ -54,3 +54,35 @@ def meaningful_line_count(filename):
         raise
 
 # Write your Quaternion class here
+@dataclass(frozen=True)
+class Quaternion:
+    def __init__(self, w, x, y, z):
+        self.w = w
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def add(self, other):
+        return Quaternion(self.w + other.w, self.x + other.x, self.y + other.y, self.z + other.z)
+    
+    def __mul__(self, other):
+        w = self.w * other.w - self.x * other.x - self.y * other.y - self.z * other.z
+        x = self.w * other.x + self.x * other.w + self.y * other.z - self.z * other.y
+        y = self.w * other.y - self.x * other.z + self.y * other.w + self.z * other.x
+        z = self.w * other.z + self.x * other.y - self.y * other.x + self.z * other.w
+        return Quaternion(w, x, y, z)
+    
+    @property
+    def coefficients(self):
+        return [self.w, self.x, self.y, self.z]
+    
+    @property
+    def conjugate(self):
+        return Quaternion(self.w, -self.x, -self.y, -self.z)   
+    
+    def __eq__(self, other):
+        return self.w == other.w and self.x == other.x and self.y == other.y and self.z == other.z
+
+    def __str__(self):
+        return f"{self.w} + {self.x}i + {self.y}j + {self.z}k"
+    
