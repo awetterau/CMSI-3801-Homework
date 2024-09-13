@@ -33,7 +33,7 @@ def powers_generator(*, base, limit):
 
 
 # Write your say function here
-def say(word=None):
+def say(word=None, /):
     words = []
 
     def extra(word=None):
@@ -45,7 +45,7 @@ def say(word=None):
     return extra(word)
 
 # Write your line count function here
-def meaningful_line_count(filename):
+def meaningful_line_count(filename, /):
     try:
         with open(filename, 'r') as file:
             return sum(1 for line in file 
@@ -61,10 +61,10 @@ class Quaternion:
     c: float
     d: float
 
-    def __add__(self, other):
+    def __add__(self, other, /):
         return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
     
-    def __mul__(self, other):
+    def __mul__(self, other, /):
         w = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
         x = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
         y = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
@@ -72,17 +72,17 @@ class Quaternion:
         return Quaternion(w, x, y, z)
     
     @property
-    def coefficients(self):
+    def coefficients(self, /):
         return (self.a, self.b, self.c, self.d)
     
     @property
-    def conjugate(self):
+    def conjugate(self, /):
         return Quaternion(self.a, -self.b, -self.c, -self.d)   
     
-    def __eq__(self, other):
+    def __eq__(self, other, /):
         return self.a == other.a and self.b == other.b and self.c == other.c and self.d == other.d
 
-    def __str__(self):
+    def __str__(self, /):
         components = []
 
         if self.a != 0.0:
