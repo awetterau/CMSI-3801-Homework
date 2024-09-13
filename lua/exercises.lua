@@ -14,10 +14,44 @@ function change(amount)
 end
 
 -- Write your first then lower case function here
+function first_then_lower_case(a, p)
+    for _, string in ipairs(a) do
+        if p(string) then
+            return string:lower()
+        end
+    end
+    return nil
+end
 
 -- Write your powers generator here
+function powers_generator(base, limit)
+    return coroutine.create(function()
+        local power = 0
+        while true do
+            local result = base ^ power
+            if result > limit then
+                return
+            end
+            coroutine.yield(result)
+            power = power + 1
+        end
+    end)
+end
 
 -- Write your say function here
+function say(initial_word)
+    local words = {}
+    
+    local function extra(word)
+        if word == nil then
+            return table.concat(words, " ")
+        end
+        table.insert(words, word)
+        return extra
+    end
+    
+    return extra(initial_word)
+end
 
 -- Write your line count function here
 
