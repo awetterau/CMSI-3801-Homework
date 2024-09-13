@@ -54,35 +54,35 @@ def meaningful_line_count(filename):
         raise
 
 # Write your Quaternion class here
-@dataclass(frozen=True)
+@dataclass
 class Quaternion:
-    def __init__(self, w, x, y, z):
-        self.w = w
-        self.x = x
-        self.y = y
-        self.z = z
+    def __init__(self, a, b, c, d):
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
 
     def add(self, other):
-        return Quaternion(self.w + other.w, self.x + other.x, self.y + other.y, self.z + other.z)
+        return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
     
     def __mul__(self, other):
-        w = self.w * other.w - self.x * other.x - self.y * other.y - self.z * other.z
-        x = self.w * other.x + self.x * other.w + self.y * other.z - self.z * other.y
-        y = self.w * other.y - self.x * other.z + self.y * other.w + self.z * other.x
-        z = self.w * other.z + self.x * other.y - self.y * other.x + self.z * other.w
+        w = self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d
+        x = self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c
+        y = self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b
+        z = self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a
         return Quaternion(w, x, y, z)
     
     @property
     def coefficients(self):
-        return [self.w, self.x, self.y, self.z]
+        return [self.a, self.b, self.c, self.d]
     
     @property
     def conjugate(self):
-        return Quaternion(self.w, -self.x, -self.y, -self.z)   
+        return Quaternion(self.a, -self.b, -self.c, -self.d)   
     
     def __eq__(self, other):
-        return self.w == other.w and self.x == other.x and self.y == other.y and self.z == other.z
+        return self.a == other.a and self.b == other.b and self.c == other.c and self.d == other.d
 
     def __str__(self):
-        return f"{self.w} + {self.x}i + {self.y}j + {self.z}k"
+        return f"{self.a} + {self.b}i + {self.c}j + {self.d}k"
     

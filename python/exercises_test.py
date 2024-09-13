@@ -7,7 +7,7 @@ from exercises import (
     change)
 
 ################################################################################
-""" counts = {True: 0, False: 0}
+counts = {True: 0, False: 0}
 def suite(name):
     print(f"\nTesting {name}", end="")
 def expect(condition):
@@ -71,7 +71,7 @@ expect(list(powers_generator(base=3, limit=27)) == [1, 3, 9, 27])
 
 suite("meaningful_line_count")
 expect_error(FileNotFoundError, 'No such file', meaningful_line_count, "no-such-file.txt")
-expect(meaningful_line_count("../test-for-line-count.txt") == 5) """
+expect(meaningful_line_count("../test-for-line-count.txt") == 5)
 
 suite("Quaternion")
 q = Quaternion(3.5, 2.25, -100.0, -1.25)
