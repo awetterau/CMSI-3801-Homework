@@ -76,8 +76,6 @@ function meaningful_line_count(path)
     return count
 end
 
-
-
 -- Write your Quaternion table here
 Quaternion = {}
 Quaternion.__index = Quaternion

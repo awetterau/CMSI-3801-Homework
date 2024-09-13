@@ -54,15 +54,14 @@ def meaningful_line_count(filename):
         raise
 
 # Write your Quaternion class here
-@dataclass
+@dataclass(frozen = True)
 class Quaternion:
-    def __init__(self, a, b, c, d):
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
+    a: float
+    b: float
+    c: float
+    d: float
 
-    def add(self, other):
+    def __add__(self, other):
         return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
     
     def __mul__(self, other):
@@ -74,7 +73,7 @@ class Quaternion:
     
     @property
     def coefficients(self):
-        return [self.a, self.b, self.c, self.d]
+        return (self.a, self.b, self.c, self.d)
     
     @property
     def conjugate(self):
@@ -84,5 +83,50 @@ class Quaternion:
         return self.a == other.a and self.b == other.b and self.c == other.c and self.d == other.d
 
     def __str__(self):
-        return f"{self.a} + {self.b}i + {self.c}j + {self.d}k"
-    
+        components = []
+
+        if self.a != 0.0:
+            components.append(f"{self.a}")
+
+        if self.b != 0.0:
+            if self.b == 1.0 and not components:
+                components.append(f"i")
+            elif self.b == 1.0 and components:
+                components.append(f"+i")
+            elif self.b == -1.0:
+                components.append(f"-i")
+            elif self.b < 0.0 or not components:
+                components.append(f"{self.b}i")
+            else:
+                components.append(f"+{self.b}i")
+
+        if self.c != 0.0:
+            if self.c == 1.0 and not components:
+                components.append(f"j")
+            elif self.c == 1.0 and components:
+                components.append(f"+j")
+            elif self.c == -1.0:
+                components.append(f"-j")
+            elif self.c < 0.0 or not components:
+                components.append(f"{self.c}j")
+            else:
+                components.append(f"+{self.c}j")
+
+        if self.d != 0.0:
+            if self.d == 1.0 and not components:
+                components.append(f"k")
+            elif self.d == 1.0 and components:
+                components.append(f"+k")
+            elif self.d == -1.0:
+                components.append(f"-k")
+            elif self.d < 0.0 or not components:
+                components.append(f"{self.d}k")
+            else:
+                components.append(f"+{self.d}k")
+
+        if not components:
+            return "0"
+
+        return "".join(components)
+
+        
