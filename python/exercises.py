@@ -14,7 +14,7 @@ def change(amount: int) -> dict[int, int]:
 
 
 # Write your first then lower case function here
-def first_then_lower_case(a, p):
+def first_then_lower_case(a, p, /):
     for string in a:
         if p(string):
             return string.lower()
@@ -45,6 +45,12 @@ def say(word=None):
     return extra(word)
 
 # Write your line count function here
-
+def meaningful_line_count(filename):
+    try:
+        with open(filename, 'r') as file:
+            return sum(1 for line in file 
+                       if line.strip() and not line.strip().startswith('#'))
+    except FileNotFoundError:
+        raise
 
 # Write your Quaternion class here

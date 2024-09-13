@@ -42,7 +42,7 @@ export function say(word = undefined) {
       return words.join(" ")
     }
     words.push(word)
-    return extra
+    return nextWord
   }
   return nextWord(word)
 }
