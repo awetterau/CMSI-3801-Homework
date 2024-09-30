@@ -24,16 +24,24 @@ public class Exercises {
 
     		// use list.of
 
+	public static String first_then_lower_case(List<String> a, Predicate<String> p) {
+		return a.stream()
+			   .filter(p)
+			   .findFirst()
+			   .map(String::toLowerCase)
+			   .orElse(null);
+	}
+
     // Write your say function here
 
     // Write your line count function here
 		// Use a BufferedReader and a try-with-resources block. Process the file using the lines() method to produce a stream.
 
 	public void meaningful_line_count() {
-		try (BufferedReader read = new BufferedReader(new FileReader("test-for-line-count.txt"))) {
+		try (BufferedReader read = new BufferedReader(new FileReader("../test-for-line-count.txt"))) {
 			long validLineCount = read.lines()
-			.filter(line -> !line.trim().isEmpty())           // Filter out empty and whitespace-only lines
-			.filter(line -> !line.trim().startsWith("#"))     // Filter out lines starting with '#'
+			.filter(line -> !line.trim().isEmpty())
+			.filter(line -> !line.trim().startsWith("#"))
 			.count(); 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -69,11 +77,13 @@ public record Quaternion(double a, double b, double c, double d) {
 	public static final D = new Quaternion(i, j, k, 0);
 
 	public Quaternion {
-		if (double.isNan(a) || double.isNan(b) || double.isNan(c) || double.isNan(d)) {
+		if (Double.isNan(a) || Double.isNan(b) || Double.isNan(c) || Double.isNan(d)) {
 			throw new IllegalArgumentException("inputs cannot be NaN");
 		}
 	}
+}
 
+	@Override
 	public Quaternion add(Quaternion other) {
 		return new Quaternion(this.a + other.a, this.b + other.b, this.c + other.c, this.d + other.d);
 	}
@@ -82,6 +92,7 @@ public record Quaternion(double a, double b, double c, double d) {
 		return (this.a, this.b, this.c, this.d);
 	}
 
+	@Override
 	public Quaternion mul(Quaternion other) {
 		double w = this.a * other.a - this.b * other.b - this.c * other.c - this.d * other.d
 		double x = this.a * other.b + this.b * other.a + this.c * other.d - this.d * other.c
@@ -92,6 +103,11 @@ public record Quaternion(double a, double b, double c, double d) {
 
 	public Quaternion conjugate() {
 		return new Quaternion(this.a, -this.b, -this.c, this.d)
+	}
+
+	@Override
+	public String toString() {
+		return
 	}
 }
 
@@ -112,7 +128,7 @@ final class Empty implements List {
 	}
 	
 	public BinarySearchTree insert(String item) {
-		return new Node(item, this);
+		return new Node(item, this.left, this.right);
 	}
 	
 	public boolean contains(String item) {
@@ -136,7 +152,7 @@ final class Node implements BinarySearchTree {
 	}
 	
 	public BinarySearchTree insert(String head) {
-		return new Node(head, this)
+		return new Node(head, this);
 	}
 	
 	public boolean contains(String head) {

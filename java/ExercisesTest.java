@@ -58,15 +58,15 @@ public class ExercisesTest {
 
         // Uncomment the following tests as you complete the exercises
 
-        // suite("firstThenLowerCase");
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of(), s -> !s.isEmpty()).isEmpty());
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("", "A", "B"), s -> !s.isEmpty()).get().equals("a"));
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("", "A", "ABC"), s -> s.length() > 3).isEmpty());
-        // expect(Exercises.firstThenLowerCase(
-        //         List.of("ABC", "ABCD", "ABCDE"), s -> s.length() > 3).get().equals("abcd"));
+        suite("firstThenLowerCase");
+        expect(Exercises.firstThenLowerCase(
+                List.of(), s -> !s.isEmpty()).isEmpty());
+        expect(Exercises.firstThenLowerCase(
+                List.of("", "A", "B"), s -> !s.isEmpty()).get().equals("a"));
+        expect(Exercises.firstThenLowerCase(
+                List.of("", "A", "ABC"), s -> s.length() > 3).isEmpty());
+        expect(Exercises.firstThenLowerCase(
+                List.of("ABC", "ABCD", "ABCDE"), s -> s.length() > 3).get().equals("abcd"));
 
         // suite("say");
         // expect(Exercises.say().phrase().equals(""));
@@ -85,12 +85,12 @@ public class ExercisesTest {
         // expect(greet.and("nice").and("person").phrase().equals("Hello there nice person"));
         // expect(greet.and("Swift").phrase().equals("Hello there Swift"));
 
-        // suite("meaningfulLineCount");
-        // expectToThrow(
-        //     () -> Exercises.meaningfulLineCount("no-such-file.txt"),
-        //     FileNotFoundException.class,
-        //     "No such file");
-        // expect(Exercises.meaningfulLineCount("../test-for-line-count.txt") == 5);
+        suite("meaningfulLineCount");
+        expectToThrow(
+            () -> Exercises.meaningfulLineCount("no-such-file.txt"),
+            FileNotFoundException.class,
+            "No such file");
+        expect(Exercises.meaningfulLineCount("../test-for-line-count.txt") == 5);
 
         // suite("Quaternion");
         // expectToThrow(() -> new Quaternion(Double.NaN, 0, 0, 0),
