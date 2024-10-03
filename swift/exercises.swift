@@ -107,28 +107,138 @@ struct Quaternion: Equatable, CustomStringConvertible {
     }
 
     var description: String {
-        let components = [(a, ""), (b, "i"), (c, "j"), (d, "k")]
-        let formattedComponents = components.enumerated().compactMap { index, component -> String? in
-            let (value, unit) = component
-            if value == 0 { return nil }
-            
-            let sign = value < 0 ? "-" : (index == 0 ? "" : "+")
-            let absValue = abs(value)
-            
-            let valueString: String
-            if absValue == 1 && unit != "" {
-                valueString = ""
-            } else if absValue.truncatingRemainder(dividingBy: 1) == 0 {
-                valueString = String(format: "%.0f", absValue)
-            } else {
-                valueString = String(format: "%.2f", absValue)
-            }
-            
-            return "\(sign)\(valueString)\(unit)"
-        }
-        
-        return formattedComponents.isEmpty ? "0" : formattedComponents.joined()
+    var components: [String] = []
+    
+    if a != 0.0 {
+        components.append(String(a))
     }
+    
+    if b != 0.0 {
+        if b == 1.0 && components.isEmpty {
+            components.append("i")
+        } else if b == 1.0 && !components.isEmpty {
+            components.append("+i")
+        } else if b == -1.0 {
+            components.append("-i")
+        } else if b < 0.0 || components.isEmpty {
+            components.append("\(b)i")
+        } else {
+            components.append("+\(b)i")
+        }
+    }
+    
+    if c != 0.0 {
+        if c == 1.0 && components.isEmpty {
+            components.append("j")
+        } else if c == 1.0 && !components.isEmpty {
+            components.append("+j")
+        } else if c == -1.0 {
+            components.append("-j")
+        } else if c < 0.0 || components.isEmpty {
+            components.append("\(c)j")
+        } else {
+            components.append("+\(c)j")
+        }
+    }
+    
+    if d != 0.0 {
+        if d == 1.0 && components.isEmpty {
+            components.append("k")
+        } else if d == 1.0 && !components.isEmpty {
+            components.append("+k")
+        } else if d == -1.0 {
+            components.append("-k")
+        } else if d < 0.0 || components.isEmpty {
+            components.append("\(d)k")
+        } else {
+            components.append("+\(d)k")
+        }
+    }
+    
+    if components.isEmpty {
+        return "0"
+    }
+    
+    return components.joined()
+}
 }
 
 // Write your Binary Search Tree enum here
+indirect enum BinarySearchTree {
+    case empty
+    case node(left: BinarySearchTree, value: String, right: BinarySearchTree)
+
+    var size: Int {
+        switch self {
+        case .empty:
+            return 0
+        case .node(let left, _, let right):
+            return 1 + left.size + right.size
+        }
+    }
+
+    func insert(_ value: String) -> BinarySearchTree {
+        switch self {
+        case .empty:
+            return .node(left: .empty, value: value, right: .empty)
+        case .node(let left, let nodeValue, let right):
+            if value < nodeValue {
+                return .node(left: left.insert(value), value: nodeValue, right: right)
+            } else if value > nodeValue {
+                return .node(left: left, value: nodeValue, right: right.insert(value))
+            } else {
+                return self
+            }
+        }
+    }
+
+    func contains(_ value: String) -> Bool {
+        switch self {
+        case .empty:
+            return false
+        case .node(let left, let nodeValue, let right):
+            if value < nodeValue {
+                return left.contains(value)
+            } else if value > nodeValue {
+                return right.contains(value)
+            } else {
+                return true
+            }
+        }
+    }
+}
+
+extension BinarySearchTree: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .empty:
+            return "()"
+        case .node(let left, let value, let right):
+            return "(\(nodeDescription(left, value, right)))"
+        }
+    }
+    
+    private func nodeDescription(_ left: BinarySearchTree, _ value: String, _ right: BinarySearchTree) -> String {
+        let leftStr = subtreeDescription(left)
+        let rightStr = subtreeDescription(right)
+        return "\(leftStr)\(value)\(rightStr)"
+    }
+    
+    private func subtreeDescription(_ tree: BinarySearchTree) -> String {
+        switch tree {
+        case .empty:
+            return ""
+        case .node(_, _, _):
+            return "(\(tree.nodeDescription()))"
+        }
+    }
+    
+    private func nodeDescription() -> String {
+        switch self {
+        case .empty:
+            return ""
+        case .node(let left, let value, let right):
+            return nodeDescription(left, value, right)
+        }
+    }
+}
