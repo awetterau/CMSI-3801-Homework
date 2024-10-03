@@ -66,11 +66,11 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
     }
 
     operator fun times(other: Quaternion): Quaternion {
-        val w = a * other.a - b * other.b - c * other.c - d * other.d
-        val x = a * other.b + b * other.a + c * other.d - d * other.c
-        val y = a * other.c - b * other.d + c * other.a + d * other.b
-        val z = a * other.d + b * other.c - c * other.b + d * other.a
-        return Quaternion(w, x, y, z)
+        val newA = a * other.a - b * other.b - c * other.c - d * other.d
+        val newB = a * other.b + b * other.a + c * other.d - d * other.c
+        val newC = a * other.c - b * other.d + c * other.a + d * other.b
+        val newD = a * other.d + b * other.c - c * other.b + d * other.a
+        return Quaternion(newA, newB, newC, newD)
     }
 
     fun coefficients(): List<Double> {
