@@ -48,17 +48,15 @@ public class Exercises {
 		}
 	}
 
-	public static Say say(String phrase) {
-		return new Say(phrase);
-	}
-
 	public static Say say() {
 		return new Say("");
 	}
+
+	public static Say say(String phrase) {
+		return new Say(phrase);
+	}
 	
     // Write your line count function here
-		//Use a BufferedReader and a try-with-resources block. Process the file using the lines() method to produce a stream.
-
 	public static int meaningfulLineCount(String filename) throws IOException {
 		try(var reader = new BufferedReader(new FileReader(filename))) {
 			long validLineCount = reader.lines()
@@ -71,29 +69,6 @@ public class Exercises {
 }
 
 // Write your Quaternion record class here
-	// use records!
-		// public record Point(double x, double y) { // fields are at the top
-		// 	public static final Point ORIGIN = new Point(0, 0); // use i j k 0 to go here
-			
-		// 	public Point { // validation check on homework
-		// 		if (Double.isNaN(x) || Double.isNaN(y)) {
-		// 			throw new IllegalArgumentException("Coordinates can not be NaN");
-		// 		}
-		// 	}
-			
-		// 	public double distanceFromOrigin() { // methods such as coefficients are added to record right here
-		// 		return Math.hypot(x, y);
-		// 	}
-			
-		// 	public Point reflectionAboutOrigin() {
-		// 		return new Point(-x, -y);
-		// 	}
-			
-		// 	public static Point midpointOf(Point p, Point q) {
-		// 		return new Point((p.x + q.x) / 2.0, (p.y + q.y) / 2.0);
-		// 	}
-		// }
-
  final record Quaternion(double a, double b, double c, double d) {
 	public final static Quaternion ZERO = new Quaternion(0, 0, 0, 0);
 	public final static Quaternion I = new Quaternion(0,1,0,0);
@@ -189,11 +164,8 @@ public class Exercises {
 sealed interface BinarySearchTree permits Empty, Node {
 	int size();
 	BinarySearchTree insert(String item);
-	boolean contains(String item); // tostring is already an object
+	boolean contains(String item);
 }
-
-// each list has three things that can happen, the empty and node classes
-// have these three methods in them both
 
 final class Empty implements BinarySearchTree {
 	public static final Empty INSTANCE = new Empty();
