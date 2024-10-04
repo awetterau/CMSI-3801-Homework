@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -22,15 +21,13 @@ public class Exercises {
         return counts;
     }
 
-    // Write your first then lower case function here
-	public static Optional<String> firstThenLowerCase(List<String> a, Predicate<String> p) {
-		return a.stream()
-			   .filter(p)
+	public static Optional<String> firstThenLowerCase(List<String> array, Predicate<String> predicate) {
+		return array.stream()
+			   .filter(predicate)
 			   .findFirst()
 			   .map(String::toLowerCase);
 	}
 
-    // Write your say function here
 	public static class Say {
 		private String phrase;
 
@@ -56,7 +53,6 @@ public class Exercises {
 		return new Say(phrase);
 	}
 	
-    // Write your line count function here
 	public static int meaningfulLineCount(String filename) throws IOException {
 		try(var reader = new BufferedReader(new FileReader(filename))) {
 			long validLineCount = reader.lines()
@@ -68,7 +64,6 @@ public class Exercises {
 	}
 }
 
-// Write your Quaternion record class here
  final record Quaternion(double a, double b, double c, double d) {
 	public final static Quaternion ZERO = new Quaternion(0, 0, 0, 0);
 	public final static Quaternion I = new Quaternion(0,1,0,0);
@@ -90,11 +85,11 @@ public class Exercises {
 	}
 
 	public Quaternion times(Quaternion other) {
-		double w = a * other.a - b * other.b - c * other.c - d * other.d;
-		double x = a * other.b + b * other.a + c * other.d - d * other.c;
-		double y = a * other.c - b * other.d + c * other.a + d * other.b;
-		double z = a * other.d + b * other.c - c * other.b + d * other.a;
-		return new Quaternion(w, x, y, z);
+		double newA = a * other.a - b * other.b - c * other.c - d * other.d;
+		double newB = a * other.b + b * other.a + c * other.d - d * other.c;
+		double newC = a * other.c - b * other.d + c * other.a + d * other.b;
+		double newD = a * other.d + b * other.c - c * other.b + d * other.a;
+		return new Quaternion(newA, newB, newC, newD);
 	}
 
 	public Quaternion conjugate() {
@@ -160,7 +155,6 @@ public class Exercises {
 
 }
 
-// Write your BinarySearchTree sealed interface and its implementations here
 sealed interface BinarySearchTree permits Empty, Node {
 	int size();
 	BinarySearchTree insert(String item);
