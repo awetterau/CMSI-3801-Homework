@@ -14,14 +14,11 @@ fun change(amount: Long): Map<Int, Long> {
     return counts
 }
 
-// Write your first then lower case function here
-public fun firstThenLowerCase(a: List<String>, p: (String) -> Boolean): String? {
-    return a.firstOrNull(p)?.lowercase()
+public fun firstThenLowerCase(array: List<String>, predicate: (String) -> Boolean): String? {
+    return array.firstOrNull(predicate)?.lowercase()
 }
 
-// Write your say function here
 class Say(public val phrase: String) {
-
     fun phrase(): String {
         println(phrase)
         return phrase
@@ -40,7 +37,6 @@ fun say(phrase: String): Say {
     return Say(phrase)
 }
 
-// Write your meaningfulLineCount function here
 @Throws(IOException::class)
 fun meaningfulLineCount(filename: String): Long {
     BufferedReader(FileReader(filename)).use { reader ->
@@ -52,7 +48,6 @@ fun meaningfulLineCount(filename: String): Long {
     }
 }
 
-// Write your Quaternion data class here
 data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double) {
     companion object {
         val ZERO = Quaternion(0.0, 0.0, 0.0, 0.0)
@@ -125,7 +120,7 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
         return components.joinToString("")
     }
 }
-// Write your Binary Search Tree interface and implementing classes here
+
 sealed interface BinarySearchTree {
     fun size(): Int
     fun insert(item: String): BinarySearchTree
