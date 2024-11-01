@@ -1,6 +1,16 @@
 module Exercises
     ( change,
-      -- put the proper exports here
+      firstThenApply,
+      powers,
+      meaningfulLineCount,
+      Shape(..),
+      BST(Empty),
+      volume,
+      surfaceArea,
+      size,
+      contains,
+      insert,
+      inorder
     ) where
 
 import qualified Data.Map as Map
@@ -20,12 +30,62 @@ change amount
                 (count, newRemaining) = remaining `divMod` d
                 newCounts = Map.insert d count counts
 
--- Write your first then apply function here
+firstThenApply :: [element] -> (element -> Bool) -> (element -> result) -> Maybe result
+firstThenApply items predicate transform = transform <$> find predicate items
 
--- Write your infinite powers generator here
+powers :: Integral number => number -> [number]
+powers baseNumber = map (baseNumber ^) [0..]
 
--- Write your line count function here
+meaningfulLineCount :: FilePath -> IO Int
+meaningfulLineCount filePath = do
+    fileContents <- readFile filePath
+    let isBlankLine = all isSpace
+        trimLeadingWhitespace = dropWhile isSpace
+        isMeaningfulLine line =
+            not (isBlankLine line) &&
+            not ("#" `isPrefixOf` (trimLeadingWhitespace line))
+    return $ length $ filter isMeaningfulLine $ lines fileContents
 
--- Write your shape data type here
+data Shape
+     = Sphere Double
+     | Box Double Double Double 
+     deriving (Eq, Show)
 
--- Write your binary search tree algebraic type here
+volume :: Shape -> Double
+volume (Sphere radius) = (4 / 3) * pi * (radius ^ 3)
+volume (Box width length depth) = width * length * depth
+
+surfaceArea :: Shape -> Double
+surfaceArea (Sphere radius) = 4 * pi * (radius ^ 2)
+surfaceArea (Box width length depth) = 2 * ((width * length) + (width * depth) + (length * depth))
+
+data BST a = Empty | Node a (BST a) (BST a)
+
+insert :: Ord a => a -> BST a -> BST a
+insert newValue Empty = Node newValue Empty Empty
+insert newValue (Node currentValue leftSubtree rightSubtree)
+     | newValue < currentValue = Node currentValue (insert newValue leftSubtree) rightSubtree
+     | newValue > currentValue = Node currentValue leftSubtree (insert newValue rightSubtree)
+     | otherwise = Node currentValue leftSubtree rightSubtree
+
+contains :: Ord a => a -> BST a -> Bool
+contains _ Empty = False
+contains searchValue (Node currentValue leftSubtree rightSubtree)
+     | searchValue < currentValue = contains searchValue leftSubtree
+     | searchValue > currentValue = contains searchValue rightSubtree
+     | otherwise = True
+
+size :: BST a -> Int
+size Empty = 0
+size (Node _ leftSubtree rightSubtree) = 1 + size leftSubtree + size rightSubtree
+
+inorder :: BST a -> [a]
+inorder Empty = []
+inorder (Node currentValue leftSubtree rightSubtree) = inorder leftSubtree ++ [currentValue] ++ inorder rightSubtree
+
+instance (Show a) => Show (BST a) where
+     show :: Show a => BST a -> String
+     show Empty = "()"
+     show (Node currentValue leftSubtree rightSubtree) = 
+          let full = "(" ++ show leftSubtree ++ show currentValue ++ show rightSubtree ++ ")" in
+               unpack $ replace (pack "()") (pack "") (pack full)
