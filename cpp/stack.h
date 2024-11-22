@@ -10,8 +10,11 @@ using namespace std;
 template <typename T>
 class Stack {
     unique_ptr<T[]> elements;
-    size_t capacity;
-    size_t top;
+    int capacity;
+    int top;
+
+    Stack(const Stack<T>&) = delete;
+    Stack<T>& operator=(const Stack<T>&) = delete;
 
 public:
     Stack() : 
@@ -32,13 +35,13 @@ public:
         return top >= MAX_CAPACITY;
     }
 
-    void push(const T& item) {
+    void push(T item) {
         if (is_full()) {
             throw overflow_error("Stack has reached maximum capacity");
         }
 
         if (top == capacity) {
-            size_t new_capacity = std::min(capacity * 2, static_cast<size_t>(MAX_CAPACITY));
+            int new_capacity = std::min(capacity * 2, static_cast<int>(MAX_CAPACITY));
             reallocate(new_capacity);
         }
 
@@ -53,7 +56,7 @@ public:
         T item = elements[--top];
 
         if (top > 0 && top * 4 <= capacity && capacity > INITIAL_CAPACITY) {
-            size_t new_capacity = capacity / 2;
+            int new_capacity = capacity / 2;
             reallocate(new_capacity);
         }
 
@@ -61,12 +64,7 @@ public:
     }
 
 private:
-    Stack(const Stack&) = delete;
-    Stack(Stack&&) = delete;
-    Stack<T>& operator=(const Stack<T>&) = delete;
-    Stack& operator=(Stack&&) = delete;
-
-    void reallocate(size_t new_capacity) {
+    void reallocate(int new_capacity) {
         if (new_capacity > MAX_CAPACITY) {
             throw runtime_error("Stack has reached maximum capacity");
         }
