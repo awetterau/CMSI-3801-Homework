@@ -54,7 +54,8 @@ public:
         }
 
         T item = elements[--top];
-
+        elements[top] = T();
+        
         if (top > 0 && top * 4 <= capacity && capacity > INITIAL_CAPACITY) {
             int new_capacity = capacity / 2;
             reallocate(new_capacity);
