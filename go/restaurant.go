@@ -59,7 +59,7 @@ func customer(name string, waiter chan *Order, wg *sync.WaitGroup) {
 }
 
 func main() {
-	waiter := make(chan *Order, 3)
+    waiter := make(chan *Order, 3)
     cooks := []string{"Remy", "Colette", "Linguini"}
 
     for _, cookName := range cooks {
