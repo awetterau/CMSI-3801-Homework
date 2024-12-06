@@ -3,7 +3,7 @@
 - **Homework 1 (Scripting)**: Lua, Python, JavaScript
   - Written by Thomas Rife and August Wetterau, submitted on 9/13/2024
   - Wrote five functions in Python, Lua and JavaScript
-  - Constructed first_then_lower_case, powers generator, say, meaningful_line_count classes and Quaternion data types in all three languages
+  - Constructed first_then_lower_case, powers generator, say, meaningful_line_count functions and Quaternion data types in all three languages
 - **Homework 2 (Enterprise)**: Java, Kotlin, Swift
   - Written by Thomas Rife and August Wetterau, submitted on 10/4/2024
   - Constructed firstThenLowerCase, chainable say, meaningfulLineCount functions, immutable Quaternion objects, and generic Binary Search Trees in all three languages
