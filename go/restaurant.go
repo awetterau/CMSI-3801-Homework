@@ -9,36 +9,36 @@ import (
 )
 
 func do(seconds int, action ...any) {
-    log.Println(action...)
-    randomMillis := 500 * seconds + rand.Intn(500 * seconds)
-    time.Sleep(time.Duration(randomMillis) * time.Millisecond)
+	log.Println(action...)
+	randomMillis := 500*seconds + rand.Intn(500*seconds)
+	time.Sleep(time.Duration(randomMillis) * time.Millisecond)
 }
 
 type Order struct {
-	id uint64
-	customer string
+	id         uint64
+	customer   string
 	preparedBy string
-	reply chan *Order
+	reply      chan *Order
 }
 
 var orderID atomic.Uint64
 
 func newOrder(customer string) *Order {
-    id := orderID.Add(1)
-    return &Order{
-        id:       id,
-        customer: customer,
-        reply:    make(chan *Order, 1),
-    }
+	id := orderID.Add(1)
+	return &Order{
+		id:       id,
+		customer: customer,
+		reply:    make(chan *Order, 1),
+	}
 }
 
 func cook(name string, waiter chan *Order) {
-    log.Println(name, "starting work")
-    for order := range waiter {
-        do(10, name, "cooking order", order.id, "for", order.customer)
-        order.preparedBy = name
-        order.reply <- order
-    }
+	log.Println(name, "starting work")
+	for order := range waiter {
+		do(10, name, "cooking order", order.id, "for", order.customer)
+		order.preparedBy = name
+		order.reply <- order
+	}
 }
 
 func customer(name string, waiter chan *Order, wg *sync.WaitGroup) {
